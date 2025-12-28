@@ -11,7 +11,7 @@ This project is a minimal Node.js service designed to demonstrate
 - CI/CD with Jenkins & GitHub Actions
 - Kubernetes-ready design
 - Observability & reliability
-- Security and cost-aware architecture
+- Security and cost-aware architectures
 
 ## Usage
 ```bash
