@@ -1,6 +1,12 @@
 pipeline {
   agent any
 
+  environment {
+    REGISTRY = "us-central1-docker.pkg.dev/avian-silo-477711-h9/node-devops-repo"
+    IMAGE = "node-devops-app"
+    TAG = "${env.GIT_COMMIT}"
+  }
+
   stages {
     stage('Checkout') {
       steps {
@@ -8,15 +14,19 @@ pipeline {
       }
     }
 
-    stage('Install Dependencies') {
+    stage('Build Docker Image') {
       steps {
-        sh 'npm install'
+        sh '''
+          docker build -t $REGISTRY/$IMAGE:$TAG .
+        '''
       }
     }
 
-    stage('Run Tests') {
+    stage('Push Image') {
       steps {
-        sh 'npm test'
+        sh '''
+          docker push $REGISTRY/$IMAGE:$TAG
+        '''
       }
     }
   }
